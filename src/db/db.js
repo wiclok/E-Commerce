@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { DB } from '../config/environments.js'
 
-export const sequelize = new Sequelize(
+const sequelize = new Sequelize(
   DB.DB_NAME,
   DB.DB_USER,
   DB.DB_PASSWORD,
@@ -12,11 +12,4 @@ export const sequelize = new Sequelize(
   }
 );
 
-export const startDB = async () => {
-  try {
-    await sequelize.sync( {alter: false } );
-  } catch (err) {
-    console.error('Error starting database')
-    console.error(err)
-  }
-}
+export default sequelize
