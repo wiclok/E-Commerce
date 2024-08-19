@@ -2,8 +2,12 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import userRouter from './routes/user.routes.js';
+import ProductRouter from './routes/product.routes.js';
+import cartRouter from './routes/cart.routes.js';
+import saleRouter from './routes/sale.routes.js';
 import { PORT } from '../src/config/environments.js';
-import { startDB } from './db/db.js';
+import { startDB } from './db/startDB.js';
 
 class Server {
 
@@ -31,9 +35,10 @@ class Server {
   }
 
   routes() {
-    this.app.get('/', (req, res) => {
-      res.send('Hello World!')
-    })
+    this.app.use('/api/users', userRouter);
+    this.app.use('/api/products', ProductRouter);
+    this.app.use('/api/carts', cartRouter);
+    this.app.use('/api/sales', saleRouter)
   }
 
   listen() {
