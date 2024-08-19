@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 class UserModel extends Model {}
 
@@ -12,15 +12,14 @@ UserModel.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM(["cliente", "vendedor", "admin"],),
-      defaultValue: "cliente",
+      type: DataTypes.ENUM(["client", "seller", "admin"],),
+      defaultValue: "client",
     }
   },
   {
