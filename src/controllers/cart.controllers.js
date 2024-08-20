@@ -10,10 +10,13 @@ class CartController {
     const { idUser, idProduct } = req.params;
     const { quantity } = req.body
 
-    const user = userService.getUserById(idUser);
-    if (!user) return res.status(404).send({ message: 'Usuario no encontrado' });
+    const user = await userService.getUserById(idUser);
 
-    if (!user.role === 'client') return res.status(403).json({ message: 'Solo los clientes pueden agragar productos al carrito'})
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    if (user.role !== 'client') {
+      return res.status(403).json({ message: 'Solo los clientes pueden agregar productos al carrito'})
+    }
     
     const product = await productService.getProductById(idProduct);
     if (!product) return res.status(404).send({ message: 'Producto no encontrado' });

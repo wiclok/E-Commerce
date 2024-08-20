@@ -19,6 +19,17 @@ class ProductService{
     return await ProductModel.findOne({ where: { name } });
   }
 
+  async updateStock(productId, quantity) {
+    const product = await ProductModel.findByPk(productId);
+    if (!product) {
+      throw new Error("Producto no encontrado");
+    }
+    product.stock = product.stock - quantity;
+    await product.save();
+
+    return 'Stock actualizado con éxito'
+  }
+
 }
 
 export default new ProductService()
